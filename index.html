@@ -41,28 +41,11 @@
     </div>
     <div class="section">
       <div class="container">
-        <div class="slide" id="slide1" data-anchor="slide1">
           <h1>Algoritmo de dikjstra</h1>
-          
-        </div>
-        
-        <div class="slide" id="slide2" data-anchor="slide2">
-          <h1>Ejemplo 1</h1>
-          <canvas id="myCanvas" width="900" height="700"></canvas>
-        </div>
-        
-        <div class="slide" id="slide3" data-anchor="slide3">
-          <h1>Ejemplo 2</h1>
-          <canvas id="myCanvas2" width="900" height="700"></canvas>
-        </div>	
-        <div class="slide" id="slide3" data-anchor="slide3">
-          <h1>Ejemplo 3</h1>
-          <canvas id="myCanvas3" width="900" height="700"></canvas>
-        </div>
-        <div class="slide" id="slide3" data-anchor="slide3">
-          <h1>Ejemplo 4</h1>
-          <canvas id="myCanvas4" width="900" height="700"></canvas>
-        </div>
+          <div class="posicionador" style="position: relative;">
+            <canvas id="myCanvas" width="900" height="700" style="z-index: 100000; position: relative;"></canvas>
+            <img src="dijsktra2.png" width="900" height="700" style="position: absolute; top: 0; left: 0;"/>
+          </div>   
       </div>
     </div>
     
@@ -214,18 +197,17 @@
   function dibujarEjemplo1(){
     var circles = [];
     
-    circles.push(Circle({ x: 100, y: 100, label: "I" }));
-    circles.push(Circle({ x: 250, y: 200, label: "A" }));
-    circles.push(Circle({ x: 400, y: 300, label: "B" }));
-    circles.push(Circle({ x: 550, y: 400, label: "C" }));
-    circles.push(Circle({ x: 700, y: 100, label: "D" }));
-    circles.push(Circle({ x: 700, y: 100, label: "E" }));
-    circles.push(Circle({ x: 700, y: 100, label: "G" }));
-    circles.push(Circle({ x: 700, y: 100, label: "H" }));
-    circles.push(Circle({ x: 700, y: 100, label: "I" }));
-    circles.push(Circle({ x: 700, y: 100, label: "J" }));
-    circles.push(Circle({ x: 700, y: 100, label: "K" }));
-    circles.push(Circle({ x: 700, y: 100, label: "F" }));
+    circles.push(Circle({ x: 85, y: 335, label: "I" }));
+    circles.push(Circle({ x: 276, y: 178, label: "A" }));
+    circles.push(Circle({ x: 276, y: 292, label: "B" }));
+    circles.push(Circle({ x: 276, y: 387, label: "C" }));
+    circles.push(Circle({ x: 276, y: 517, label: "D" }));
+    circles.push(Circle({ x: 440, y: 292, label: "E" }));
+    circles.push(Circle({ x: 438, y: 387, label: "G" }));
+    circles.push(Circle({ x: 608, y: 292, label: "H" }));
+    circles.push(Circle({ x: 608, y: 386, label: "J" }));
+    circles.push(Circle({ x: 706, y: 338, label: "K" }));
+    circles.push(Circle({ x: 820, y: 335, label: "F" }));
     
     circles.forEach(function(circle, index) {
       circle.draw();
@@ -242,7 +224,7 @@
           console.log("evento de click", pos, circle);
           context.beginPath();
           context.arc(circle.x, circle.y, circle.radius, 0, 2 * Math.PI, false);
-          context.fillStyle ='#003300';
+          context.fillStyle ='rgba(0,0,0,0.5)';
           context.fill();
           console.log(findShortestPath(graph, "A", "K"));
         }
@@ -254,6 +236,8 @@
     return Math.sqrt((point.x-circle.x) ** 2 + (point.y - circle.y) ** 2) < circle.radius;
   }
   
+
+  dibujarEjemplo1();
   
   
 </script>
