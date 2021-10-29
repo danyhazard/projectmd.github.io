@@ -64,11 +64,12 @@
     </div>
     <div class="section">
       <div class="container">
-        <h1>Algoritmo de dikjstra</h1>
+        <h1>Algoritmo de Dijkstra</h1>
         <div class="posicionador" style="position: relative; text-align: left;">
           <canvas id="myCanvas" width="900" height="700" style="z-index: 100000; position: relative; "></canvas>
           <img src="dijsktra2.png" width="900" height="700" style="position: absolute; top: 0; left: 0;"/>
         </div> 
+        <p id="resultadoD"></p>
         <button type="button" class="btn btn-primary" id="reiniciarDijkstra" disabled>Reiniciar Inicio</button>  
       </div>
     </div>
@@ -105,7 +106,7 @@
     $("#reiniciarDijkstra").click(function(){
       posicionesEvaluar = [];
       context.clearRect(0, 0, canvas.width, canvas.height);
-      //dibujarEjemplo1();
+      $("#resultadoD").text("");
     });
   });
   
@@ -268,6 +269,7 @@
             context.fill();
             if(posicionesEvaluar.length == 2){
               responseDikjstra = findShortestPath(graph, posicionesEvaluar[0].label, posicionesEvaluar[1].label);
+              $("#resultadoD").text("La distancia mas corta es de: "+responseDikjstra.distance);
               console.log("path", responseDikjstra);
               circles.forEach(circle2 => {
                   responseDikjstra.path.forEach( (path, index)=> {
