@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
-
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta name="Resource-type" content="Document" />
@@ -9,9 +8,33 @@
   <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
   <script type="text/javascript" src="bootstrap.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="examples.css" />
 </head>
 <body>
+  <ul id="menu">
+    <li data-menuanchor="firstPage" class="active"><a href="#firstPage">Presentación</a></li>
+    <li data-menuanchor="secondPage"><a href="#secondPage">Euclides</a></li>
+    <li data-menuanchor="3rdPage"><a href="#3rdPage">Dijkstra</a></li>
+  </ul>
   <div id="fullpage">
+    <div class="section">
+      <div class="container">
+        <div class="row justify-content-md-center">
+          <div class="col-md-8 ">
+            <h1>Proyecto Final</h2>
+            <img src="logo.png" style="width: 80%;">
+          </div>
+        </div>
+        <div class="row justify-content-md-center" style="margin-top: 25px">
+          <div class="col-md-6 ">
+            <h2>Integrantes:</h2>
+            <p style="font-size: 15px;">JOSUÉ DANIEL JUÁREZ CHACLÁN</h3>
+            <p style="font-size: 15px;">JYMY DANIEL FRANCISCO ESCOBAR ZACARÍAS</h3>
+            <p style="font-size: 15px;">FERNANDO BENJAMIN JUAREZ CHACLAN</h3>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="section">
       <div class="container">
         <h1>Algoritmo de euclides</h1>
@@ -42,8 +65,8 @@
     <div class="section">
       <div class="container">
         <h1>Algoritmo de dikjstra</h1>
-        <div class="posicionador" style="position: relative;">
-          <canvas id="myCanvas" width="900" height="700" style="z-index: 100000; position: relative;"></canvas>
+        <div class="posicionador" style="position: relative; text-align: left;">
+          <canvas id="myCanvas" width="900" height="700" style="z-index: 100000; position: relative; "></canvas>
           <img src="dijsktra2.png" width="900" height="700" style="position: absolute; top: 0; left: 0;"/>
         </div> 
         <button type="button" class="btn btn-primary" id="reiniciarDijkstra" disabled>Reiniciar Inicio</button>  
@@ -58,7 +81,9 @@
 <script>
   
   var myFullpage = new fullpage('#fullpage', {
+    menu: '#menu',
     sectionsColor: ['#f2f2f2', '#4BBFC3', '#7BAABE', 'whitesmoke', '#ccddff'],
+    anchors: ['firstPage', 'secondPage', '3rdPage'],
     slidesNavigation: true,
   });
   let posicionesEvaluar = [];
