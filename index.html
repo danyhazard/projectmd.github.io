@@ -29,7 +29,7 @@
               <input id="inputNumber2" class="form-control" min="1" type="number">
             </div>
             
-            <button type="button" class="btn btn-primary" id="calcularEuclides">calcular</button>
+            <button type="button" class="btn btn-primary" id="calcularEuclides">Calcular</button>
           </div>
           <div class="col-md-6">
             <div id="rMcd"></div>
@@ -41,11 +41,12 @@
     </div>
     <div class="section">
       <div class="container">
-          <h1>Algoritmo de dikjstra</h1>
-          <div class="posicionador" style="position: relative;">
-            <canvas id="myCanvas" width="900" height="700" style="z-index: 100000; position: relative;"></canvas>
-            <img src="dijsktra2.png" width="900" height="700" style="position: absolute; top: 0; left: 0;"/>
-          </div>   
+        <h1>Algoritmo de dikjstra</h1>
+        <div class="posicionador" style="position: relative;">
+          <canvas id="myCanvas" width="900" height="700" style="z-index: 100000; position: relative;"></canvas>
+          <img src="dijsktra2.png" width="900" height="700" style="position: absolute; top: 0; left: 0;"/>
+        </div> 
+        <button type="button" class="btn btn-primary" id="reiniciarDijkstra" disabled>Reiniciar Inicio</button>  
       </div>
     </div>
     
@@ -60,7 +61,9 @@
     sectionsColor: ['#f2f2f2', '#4BBFC3', '#7BAABE', 'whitesmoke', '#ccddff'],
     slidesNavigation: true,
   });
-
+  let posicionesEvaluar = [];
+  var canvas = document.getElementById('myCanvas');
+  var context = canvas.getContext('2d');
   /* algoritmo de euclides */
   $(document).ready(function(){
     $("#calcularEuclides").click(function(){
@@ -73,6 +76,12 @@
         $("#rMcm").text("Mínimo común múltiplo (M.C.M.): "+EuclidesMCM(iN1, iN2));
       }
     })
+
+    $("#reiniciarDijkstra").click(function(){
+      posicionesEvaluar = [];
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      //dibujarEjemplo1();
+    });
   });
   
   function EuclidesMCD(a, b) {
@@ -153,7 +162,7 @@
       visited.push(node);
       node = shortestDistanceNode(distances, visited);
     }
-
+    
     let shortestPath = [endNode];
     let parent = parents[endNode];
     while (parent) {
@@ -161,7 +170,7 @@
       parent = parents[parent];
     }
     shortestPath.reverse();
-      
+    
     const results = {
       distance: distances[endNode],
       path: shortestPath
@@ -171,8 +180,7 @@
   };
   
   /* dibujo */
-  var canvas = document.getElementById('myCanvas');
-  var context = canvas.getContext('2d');
+
   
   function Circle(I) {
     I.radius = 20;
@@ -210,10 +218,10 @@
     circles.push(Circle({ x: 820, y: 335, label: "F" }));
     
     circles.forEach(function(circle, index) {
-      circle.draw();
+      //circle.draw();
     });
-
-    let posicionesEvaluar = [];
+    
+    
     canvas.addEventListener("click", function(e){
       const pos = {
         x: e.offsetX,
@@ -221,12 +229,38 @@
       };
       circles.forEach(circle => {
         if (isIntersect(pos, circle)) {
-          console.log("evento de click", pos, circle);
-          context.beginPath();
-          context.arc(circle.x, circle.y, circle.radius, 0, 2 * Math.PI, false);
-          context.fillStyle ='rgba(0,0,0,0.5)';
-          context.fill();
-          console.log(findShortestPath(graph, "A", "K"));
+          if(posicionesEvaluar.length < 2){
+            if(posicionesEvaluar.length == 1){
+              posicionesEvaluar.push(circle);
+              context.fillStyle ='rgba(245, 39, 39, 0.47)';
+            }else{
+              $("#reiniciarDijkstra").prop('disabled', false);
+              posicionesEvaluar.push(circle);
+              context.fillStyle ='rgba(39, 245, 127, 0.47)';
+            }
+            context.beginPath();
+            context.arc(circle.x, circle.y, circle.radius, 0, 2 * Math.PI, false);         
+            context.fill();
+            if(posicionesEvaluar.length == 2){
+              responseDikjstra = findShortestPath(graph, posicionesEvaluar[0].label, posicionesEvaluar[1].label);
+              console.log("path", responseDikjstra);
+              circles.forEach(circle2 => {
+                  responseDikjstra.path.forEach( (path, index)=> {
+                    if(path != posicionesEvaluar[0].label && path != posicionesEvaluar[1].label){
+                      if(path == circle2.label){
+                        setTimeout(function() {
+                          context.fillStyle ='rgba(41, 39, 245, 0.47)';
+                          context.beginPath();
+                          context.arc(circle2.x, circle2.y, circle2.radius, 0, 2 * Math.PI, false);         
+                          context.fill();
+                        }, 200*(index+1));
+                        
+                      }
+                    }
+                    })
+              });
+            }
+          }
         }
       }); 
     }, false);
@@ -236,7 +270,7 @@
     return Math.sqrt((point.x-circle.x) ** 2 + (point.y - circle.y) ** 2) < circle.radius;
   }
   
-
+  
   dibujarEjemplo1();
   
   
